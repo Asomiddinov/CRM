@@ -34,7 +34,7 @@ def generator():
         return render_template("generator.html", title="Index Page", form=form)
 
 
-@app.route("/mine")
+@app.route("/mine", methods=["GET", "POST"])
 def mine():
     form = Mine()
     if request.method == "POST":
@@ -43,7 +43,7 @@ def mine():
             quantity = form.quantity.data
             mark = form.mark.data
             paid = form.paid.data
-        return render_template("act.html", client=client, quantity=quantity, mark=mark, paid=paid)
+            return render_template("act.html", form=form, client=client, quantity=quantity, mark=mark, paid=paid)
     else:
-        flash(message="Something went wrong!")
+        flash("No post created for this code!", "error")
         return render_template("index.html")

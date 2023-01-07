@@ -15,6 +15,7 @@ class Mine(FlaskForm):
                          DataRequired(), Length(min=3, max=500)])
     quantity = StringField("Quantity", validators=[
                            DataRequired(), Length(min=3, max=500)])
-    mark = StringField("Mark", DataRequired(), Length(min=3, max=100))
+    mark = StringField("Mark", validators=[
+                       DataRequired(), Length(min=3, max=100)])
     paid = IntegerField("Paid", validators=[DataRequired()])
     date = DateField("Date", format="%d-%m-%Y")

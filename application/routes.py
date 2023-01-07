@@ -1,5 +1,5 @@
 from application.__init__ import app
-from flask import render_template, request
+from flask import render_template, request, flash
 from application.forms import QRCodeData, Mine
 import secrets
 import qrcode
@@ -44,3 +44,6 @@ def mine():
             mark = form.mark.data
             paid = form.paid.data
         return render_template("act.html", client=client, quantity=quantity, mark=mark, paid=paid)
+    else:
+        flash(message="Something went wrong!")
+        return render_template("index.html")

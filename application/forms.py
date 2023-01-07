@@ -1,4 +1,4 @@
-from wtforms import StringField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField, IntegerField, BooleanField
 from wtforms.fields import DateField
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length
@@ -17,5 +17,7 @@ class Mine(FlaskForm):
                            DataRequired(), Length(min=3, max=500)])
     mark = StringField("Mark", validators=[
                        DataRequired(), Length(min=3, max=100)])
-    paid = IntegerField("Paid", validators=[DataRequired()])
-    date = DateField("Date", format="%d-%m-%Y")
+    price = IntegerField("Price", validators=[DataRequired()])
+    paid = BooleanField("Is Paid?", validators=[DataRequired()])
+    date = DateField("Date")
+    submit = SubmitField("Confirm")

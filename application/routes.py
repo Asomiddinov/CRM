@@ -37,13 +37,4 @@ def generator():
 @app.route("/mine", methods=["GET", "POST"])
 def mine():
     form = Mine()
-    if request.method == "POST":
-        if form.validate_on_submit():
-            client = form.client.data
-            quantity = form.quantity.data
-            mark = form.mark.data
-            paid = form.paid.data
-            return render_template("act.html", form=form, client=client, quantity=quantity, mark=mark, paid=paid)
-    else:
-        flash("No post created for this code!", "error")
-        return render_template("index.html")
+    return render_template("act.html", form=form)

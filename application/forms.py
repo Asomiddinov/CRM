@@ -21,8 +21,7 @@ class Mine(FlaskForm):
                        DataRequired(), Length(min=3, max=100)])
     price = IntegerField("Price", validators=[DataRequired()])
     currency = SelectField("Currency", choices=["UZS", "USD", "EUR", "RUB"])
-    paid = RadioField("Status", choices=[
-                      "To'landi", "To'lanmadi"], validators=[DataRequired()])
+    paid = IntegerField("Status", validators=[DataRequired()])
     driver = StringField("Driver", validators=[
                          DataRequired(), Length(min=3, max=500)])
     date = DateField("Date", validators=[DataRequired()])

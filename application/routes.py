@@ -8,7 +8,7 @@ import qrcode
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html", title="Home Page 🔢")
+    return render_template("index.html", title="Home Page")
 
 
 @app.route("/info")
@@ -29,9 +29,9 @@ def generator():
                     str(dat)).save(qrcode_location)
             except Exception as e:
                 print(e)
-            return render_template("generated.html", title="Generated", image=image_name)
+            return render_template("generated.html", title="Generated 🔢", image=image_name)
     else:
-        return render_template("generator.html", title="Index Page", form=form)
+        return render_template("generator.html", title="🔢", form=form)
 
 
 @app.route("/mine", methods=["GET", "POST"])

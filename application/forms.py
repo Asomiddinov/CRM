@@ -14,7 +14,7 @@ class Mine(FlaskForm):
     client = StringField("Client", validators=[
                          DataRequired(), Length(min=3, max=500)])
     address = StringField("Address", validators=[
-                          DataRequired(), Length(min=5, max=500)])
+                          DataRequired(), Length(min=3, max=500)])
     quantity = StringField("Quantity", validators=[
                            DataRequired(), Length(min=3, max=500)])
     mark = StringField("Mark", validators=[
@@ -22,8 +22,8 @@ class Mine(FlaskForm):
     price = IntegerField("Price", validators=[DataRequired()])
     currency = SelectField("Currency", choices=["UZS", "USD", "EUR", "RUB"])
     paid = RadioField("Status", choices=[
-                      "Paid", "Unpaid"], validators=[DataRequired()])
+                      "To'landi", "To'lanmadi"], validators=[DataRequired()])
     driver = StringField("Driver", validators=[
-                         DataRequired(), Length(min=5, max=500)])
+                         DataRequired(), Length(min=3, max=500)])
     date = DateField("Date", validators=[DataRequired()])
     submit = SubmitField("Confirm")

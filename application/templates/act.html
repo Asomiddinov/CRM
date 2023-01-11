@@ -12,8 +12,47 @@
 {% endif %}
 {% endwith %}
 <!-- end of flash -->
+<style>
+    h2 {
+        text-align: center;
+    }
+</style>
+{% if client %}
+<!-- table -->
+<table class="container table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Client</th>
+            <th scope="col">Address</th>
+            <th scope="col">Miqdor</th>
+            <th scope="col">Mark</th>
+            <th scope="col">Narxi</th>
+            <th scope="col">Pul birligi</th>
+            <th scope="col">Status</th>
+            <th scope="col">Haydovchi</th>
+            <th scope="col">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>{{ client }}</td>
+            <td>{{ address }}</td>
+            <td>{{ quantity }}</td>
+            <td>{{ mark }}</td>
+            <td>{{ price }}</td>
+            <td>{{ currency }}</td>
+            <td>{{ paid }}</td>
+            <td>{{ driver }}</td>
+            <td>{{ date }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% else %}
 <div class="">
-    <form class="container-fluid">
+    <form class="container-fluid" method="post">
         <div class="row">
             <div class="col">
                 <b>{{ form.client.label }}</b>
@@ -56,6 +95,7 @@
         {{ form.submit(class="btn btn-success") }}
     </form>
 </div>
+{% endif %}
 {% endblock %}
 <style>
     button {

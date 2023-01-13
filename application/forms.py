@@ -16,13 +16,15 @@ class Mine(FlaskForm):
     address = StringField("Address", validators=[
                           DataRequired(), Length(min=3, max=500)])
     quantity = StringField("Quantity", validators=[
-                           DataRequired(), Length(min=3, max=500)])
+                           DataRequired(), Length(max=500)])
     mark = StringField("Mark", validators=[
                        DataRequired(), Length(min=3, max=100)])
     price = IntegerField("Price", validators=[DataRequired()])
     currency = SelectField("Currency", choices=["UZS", "USD", "EUR", "RUB"])
-    paid = IntegerField("Status", validators=[DataRequired()])
+    paid = IntegerField("Paid", validators=[DataRequired()])
     driver = StringField("Driver", validators=[
                          DataRequired(), Length(min=3, max=500)])
     date = DateField("Date", validators=[DataRequired()])
+    approve = SelectField("Agreement", choices=[
+                          "O'tkazib yuboring!", "O'tkazib yubormang!"])
     submit = SubmitField("Confirm")

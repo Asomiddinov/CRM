@@ -18,19 +18,18 @@
     }
 </style>
 {% if client %}
-<!-- table -->
-<table class="container table">
+<table class="container table-bordered" action="/acted">
     <thead class="thead-dark">
-        <tr>
+        <tr class="table-dark">
             <th scope="col">#</th>
             <th scope="col">Client</th>
             <th scope="col">Address</th>
             <th scope="col">Miqdor</th>
             <th scope="col">Mark</th>
-            <th scope="col">To'lanishi kerak</th>
+            <th scope="col">Umumiy narx</th>
             <th scope="col">Pul birligi</th>
             <th scope="col">To'landi</th>
-            <th scope="col">Status</th>
+            <th scope="col">Qoldiq</th>
             <th scope="col">Haydovchi</th>
             <th scope="col">Date</th>
         </tr>
@@ -44,8 +43,8 @@
             <td>{{ mark }}</td>
             <td>{{ price }}</td>
             <td>{{ currency }}</td>
-            <td>{{ price - paid }}</td>
             <td>{{ paid }}</td>
+            <td>{{ price - paid }}</td>
             <td>{{ driver }}</td>
             <td>{{ date }}</td>
         </tr>
@@ -83,7 +82,8 @@
                 <b>{{ form.currency(class="form-control") }}</b>
             </div>
             <div class="col">
-                <b>{{ form.paid(class="form-switch") }}</b>
+                <b>{{ form.paid.label }}</b>
+                <b>{{ form.paid(class="form-control") }}</b>
             </div>
             <div class="col">
                 <b>{{ form.driver.label }}</b>
@@ -93,14 +93,12 @@
                 <b>{{ form.date.label }}</b>
                 {{ form.date(class="form-control", placeholder="Quantity of material") }}
             </div>
+            <div class="container"><b>{{ form.approve.label }}</b>
+                {{ form.approve(class="form-control", placeholder="Quantity of material") }}
+            </div>
         </div><br>
-        {{ form.submit(class="btn btn-success") }}
+        <div align="center">{{ form.submit(class="btn btn-success") }}</div>
     </form>
 </div>
 {% endif %}
 {% endblock %}
-<style>
-    button {
-        text-align: center;
-    }
-</style>

@@ -46,4 +46,13 @@ def mine():
     paid = form.paid.data
     driver = form.driver.data
     date = form.date.data
-    return render_template("act.html", form=form, client=client, address=address, quantity=quantity, mark=mark, price=price, currency=currency, paid=paid, driver=driver, date=date)
+    approve = form.approve.data
+    return render_template("act.html", form=form, client=client, address=address, quantity=quantity, mark=mark, price=price, currency=currency, paid=paid, driver=driver, date=date, approve=approve)
+
+
+@app.route("/acted", methods=["GET", "POST"])
+def acted():
+    form = Mine()
+    return render_template("acted.html", form=form, client=form.client.data, address=form.address.data, qantity=form.quantity.data, mark=form.mark.data,
+                           price=form.price.data, currency=form.currency.data, paid=form.paid.data, driver=form.driver.data, date=form.date.data,
+                           approve=form.approve.data)

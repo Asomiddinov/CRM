@@ -18,7 +18,8 @@
     }
 </style>
 {% if client %}
-<table class="container table-bordered" action="/acted">
+{{ form.csrf_token() }}
+<table class="container table table-info">
     <thead class="thead-dark">
         <tr class="table-dark">
             <th scope="col">#</th>
@@ -32,6 +33,7 @@
             <th scope="col">Qoldiq</th>
             <th scope="col">Haydovchi</th>
             <th scope="col">Date</th>
+            <th scope="col">Ruxsat</th>
         </tr>
     </thead>
     <tbody>
@@ -47,6 +49,7 @@
             <td>{{ price - paid }}</td>
             <td>{{ driver }}</td>
             <td>{{ date }}</td>
+            <td>{{ approve }}</td>
         </tr>
     </tbody>
 </table>

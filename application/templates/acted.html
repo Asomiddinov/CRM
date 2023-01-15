@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
+{% if client %}
+{{ form.csrf_token() }}
 
 <table class="container table-bordered">
     <thead class="thead-dark">
@@ -34,4 +36,5 @@
     </tbody>
 </table>
 
+{% endif %}
 {% endblock %}

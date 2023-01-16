@@ -1,6 +1,6 @@
-from application.__init__ import app
+from application.__init__ import app, db
 from flask import render_template, request, flash, redirect, url_for
-from application.forms import QRCodeData, Mine
+from forms import QRCodeData, Mine
 import secrets
 import qrcode
 

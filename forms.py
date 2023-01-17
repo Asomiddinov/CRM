@@ -2,6 +2,7 @@ from wtforms import StringField, SubmitField, IntegerField, RadioField, SelectFi
 from wtforms.fields import DateField
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length
+from __init__ import db
 
 
 class QRCodeData(FlaskForm):
@@ -28,3 +29,16 @@ class Mine(FlaskForm):
     approve = SelectField("Agreement", choices=[
                           "O'tkazib yuboring!", "O'tkazib yubormang!"])
     submit = SubmitField("Confirm")
+
+
+# Data Base Class:
+class Users(db.Model):
+    id = db.Column("user_id", db.Integer, primary_key=True)
+    name = db.Column("name", db.String(250))
+    email = db.Column(db.String(250))
+    address = db.Column(db.String(250))
+
+    def __init__(self, name, email, address):
+        self.name = name
+        self.email = email
+        self.address = address

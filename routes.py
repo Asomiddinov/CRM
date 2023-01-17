@@ -1,6 +1,6 @@
-from application.__init__ import app, db
+from __init__ import app, db
 from flask import render_template, request, flash, redirect, url_for
-from forms import QRCodeData, Mine
+from forms import QRCodeData, Mine, Users
 import secrets
 import qrcode
 
@@ -56,3 +56,8 @@ def acted():
     return render_template("acted.html", form=form, client=form.client.data, address=form.address.data, qantity=form.quantity.data, mark=form.mark.data,
                            price=form.price.data, currency=form.currency.data, paid=form.paid.data, driver=form.driver.data, date=form.date.data,
                            approve=form.approve.data)
+
+
+@app.route("/users")
+def users():
+    return render_template("users.html", users=Users.query.all())

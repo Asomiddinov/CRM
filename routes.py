@@ -61,3 +61,26 @@ def acted():
 @app.route("/users")
 def users():
     return render_template("users.html", users=Users.query.all())
+
+
+@app.route("/sign_up", methods=["GET", "POST"])
+def sign_up():
+    if request.method == "POST":
+        email = request.form.get("email")
+        fullname = request.form.get("fullname")
+        password1 = request.form.get("password1")
+        password2 = request.form.get("password2")
+        if len(email) < 5:
+            flash("At least 6 characters, please!", category="error")
+        elif password1 != password2:
+            flash("Passwords don't match", category="error")
+        elif len(password1) < 5:
+            flash("At least 6 characters, please", category="error")
+        else:
+            flash("Account created successfully!", category="success")
+    return render_template("sign_up.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    return render_template("login.html")

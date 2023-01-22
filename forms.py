@@ -35,8 +35,8 @@ class Mine(FlaskForm):
 class Users(db.Model):
     id = db.Column("user_id", db.Integer, primary_key=True)
     name = db.Column("name", db.String(250))
-    email = db.Column(db.String(250))
-    address = db.Column(db.String(250))
+    email = db.Column("email", db.String(250))
+    address = db.Column("address", db.String(250))
 
     def __init__(self, name, email, address):
         self.name = name

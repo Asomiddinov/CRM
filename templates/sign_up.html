@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block content %}
+<form action="" method="post">
+    <h3 align="center">
+        Fill with necessary data:
+    </h3>
+    <div class="form-control container">
+        <label for="email"><b>Email</b></label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="email">
+        <br>
+        <label for="fullname"><b>Full name</b></label>
+        <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full name">
+        <br>
+        <label for="password1"><b>Password</b></label>
+        <input type="password" class="form-control" id="password1" name="password1" placeholder="Password">
+        <br>
+        <label for="password2"><b>Confirm Password</b></label>
+        <input type="password" class="form-control" id="password2" name="password2" placeholder="Repeat Password">
+        <br>
+        <div align="center">
+            <button type="submit" class="btn btn-success"><b>Ok</b></button>
+        </div>
+    </div>
+</form>
+{% endblock %}

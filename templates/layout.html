@@ -39,6 +39,12 @@
             <a href="/info">
                 <button class="btn btn-sm btn-success" type="button"><b>Info</b></button>
             </a>
+            <a href="/sign_up">
+                <button class="btn btn-sm btn-success" type="button"><b>Sign Up</b></button>
+            </a>
+            <a href="/login">
+                <button class="btn btn-sm btn-success" type="button"><b>Login</b></button>
+            </a>
         </form>
     </nav>
 
@@ -49,7 +55,27 @@
         integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
         crossorigin="anonymous"></script>
 </body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+{% if category=="error" %}
+<div class="alert alert-danger alert fade show container" role="alert">
+    {{ message }}
+    <button>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show container" role="alert">
+    {{ message }}
+    <button type="button" class="btn close" data-dismiss="alert">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
 
-</html>
 {% block content %}
 {% endblock %}

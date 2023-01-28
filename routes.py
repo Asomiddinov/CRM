@@ -1,8 +1,9 @@
 from __init__ import app, db
 from flask import render_template, request, flash, redirect, url_for
-from forms import QRCodeData, Mine, Users
+from forms import QRCodeData, Mine, User
 import secrets
 import qrcode
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 @app.route("/")
@@ -58,9 +59,9 @@ def acted():
                            approve=form.approve.data)
 
 
-@app.route("/users")
+@app.route("/user")
 def users():
-    return render_template("users.html", users=Users.query.all())
+    return render_template("users.html", users=User.query.all())
 
 
 @app.route("/sign_up", methods=["GET", "POST"])
@@ -70,6 +71,7 @@ def sign_up():
         fullname = request.form.get("fullname")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
+        comment = str(password1)
         if len(email) < 5:
             flash("At least 6 characters for email, please!", category="error")
         elif password1 != password2:
@@ -77,7 +79,12 @@ def sign_up():
         elif len(password1) < 5:
             flash("At least 6 characters for password, please", category="error")
         else:
+            new_user = User(email=email, fullname=fullname, comment=comment, password=generate_password_hash(
+                password1, method="sha256"))
+            db.session.add(new_user)
+            db.session.commit()
             flash("Account created successfully!", category="success")
+            redirect(url_for("index"))
     return render_template("sign_up.html")
 
 

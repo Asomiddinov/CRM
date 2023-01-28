@@ -4,6 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length
 from __init__ import db
 from flask_login import UserMixin
+from sqlalchemy.sql import func
 
 
 class QRCodeData(FlaskForm):
@@ -32,14 +33,18 @@ class Mine(FlaskForm):
     submit = SubmitField("Confirm")
 
 
-# Data Base Class:
-class Users(db.Model):
-    id = db.Column("user_id", db.Integer, primary_key=True)
-    name = db.Column("name", db.String(250))
-    email = db.Column("email", db.String(250))
-    address = db.Column("address", db.String(250))
+class Note(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    data = db.Column(db.String(10000))
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
-    def __init__(self, name, email, address):
-        self.name = name
-        self.email = email
-        self.address = address
+
+# User Class:
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(250), unique=True)
+    password = db.Column(db.String(150))
+    fullname = db.Column(db.String(250))
+    comment = db.Column(db.String(250))
+    notes = db.relationship("Note")

@@ -3,6 +3,7 @@ from wtforms.fields import DateField
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length
 from __init__ import db
+from flask_login import UserMixin
 
 
 class QRCodeData(FlaskForm):

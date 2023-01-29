@@ -4,7 +4,7 @@ from forms import QRCodeData, Mine, User
 import secrets
 import qrcode
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_login import login_user, logout_user, login_required, current_user
 app = create_app()
 
 
@@ -20,6 +20,7 @@ def layout():
 
 
 @app.route("/generator", methods=["GET", "POST"])
+@login_required
 def generator():
     form = QRCodeData()
     if request.method == "POST":
@@ -38,6 +39,7 @@ def generator():
 
 
 @app.route("/mine", methods=["GET", "POST"])
+@login_required
 def mine():
     form = Mine()
     client = form.client.data
@@ -74,7 +76,10 @@ def sign_up():
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
         comment = str(password1)
-        if len(email) < 5:
+        user = User.query.filter_by(email=email).first()
+        if user:
+            flash("This email is already have. Use another!", category="error")
+        elif len(email) < 5:
             flash("At least 6 characters for email, please!", category="error")
         elif password1 != password2:
             flash("Passwords don't match", category="error")
@@ -85,6 +90,7 @@ def sign_up():
                 password1, method="sha256"))
             db.session.add(new_user)
             db.session.commit()
+            login_user(user, remember=True)
             flash("Account created successfully!", category="success")
             return redirect(url_for("index"))
     return render_template("sign_up.html")
@@ -92,4 +98,23 @@ def sign_up():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                flash("Logged in successfully", category="success")
+                login_user(user, remember=True)
+                return redirect(url_for("index"))
+            else:
+                flash("Incorrect password", category="error")
+        else:
+            flash("This user doesn't exist", category="error")
     return render_template("login.html")
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    return redirect(url_for("login"))

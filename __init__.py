@@ -3,7 +3,7 @@ from flask import Flask
 import os
 from os import path
 from flask_migrate import Migrate
-
+from flask_login import LoginManager
 db = SQLAlchemy()
 
 
@@ -18,6 +18,16 @@ def create_app():
     db.init_app(app)
     migrate = Migrate(app, db)
     create_database(app)
+
+    login_manager = LoginManager(app)
+    login_manager.login_view = "routes.login"
+    login_manager.init_app(app)
+
+    from forms import User
+
+    @login_manager.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
     return app
 
 

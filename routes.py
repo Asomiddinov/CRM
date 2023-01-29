@@ -1,9 +1,11 @@
-from __init__ import app, db
+from __init__ import create_app, db
 from flask import render_template, request, flash, redirect, url_for
 from forms import QRCodeData, Mine, User
 import secrets
 import qrcode
 from werkzeug.security import generate_password_hash, check_password_hash
+
+app = create_app()
 
 
 @app.route("/")

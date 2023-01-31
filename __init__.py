@@ -20,7 +20,7 @@ def create_app():
     create_database(app)
 
     login_manager = LoginManager(app)
-    login_manager.login_view = "routes.login"
+    login_manager.login_view = "login"
     login_manager.init_app(app)
 
     from forms import User

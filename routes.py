@@ -11,12 +11,12 @@ app = create_app()
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html", title="Home Page")
+    return render_template("index.html", title="Home Page", user=current_user)
 
 
 @app.route("/info")
-def layout():
-    return render_template("info.html")
+def info():
+    return render_template("info.html", user=current_user)
 
 
 @app.route("/generator", methods=["GET", "POST"])
@@ -33,9 +33,9 @@ def generator():
                     str(dat)).save(qrcode_location)
             except Exception as e:
                 print(e)
-            return render_template("generated.html", title="Generated 🔢", image=image_name)
+            return render_template("generated.html", title="Generated 🔢", image=image_name, user=current_user)
     else:
-        return render_template("generator.html", title="🔢", form=form)
+        return render_template("generator.html", title="🔢", form=form, user=current_user)
 
 
 @app.route("/mine", methods=["GET", "POST"])
@@ -52,7 +52,8 @@ def mine():
     driver = form.driver.data
     date = form.date.data
     approve = form.approve.data
-    return render_template("act.html", form=form, client=client, address=address, quantity=quantity, mark=mark, price=price, currency=currency, paid=paid, driver=driver, date=date, approve=approve)
+    return render_template("act.html", form=form, client=client, address=address, quantity=quantity, mark=mark, price=price, currency=currency, paid=paid, driver=driver, date=date, approve=approve,
+                           user=current_user)
 
 
 @app.route("/acted", methods=["GET", "POST"])
@@ -60,15 +61,17 @@ def acted():
     form = Mine()
     return render_template("acted.html", form=form, client=form.client.data, address=form.address.data, qantity=form.quantity.data, mark=form.mark.data,
                            price=form.price.data, currency=form.currency.data, paid=form.paid.data, driver=form.driver.data, date=form.date.data,
-                           approve=form.approve.data)
+                           approve=form.approve.data,
+                           user=current_user)
 
 
-@app.route("/user")
+@app.route("/users")
 def users():
-    return render_template("users.html", users=User.query.all())
+    return render_template("users.html", user=current_user)
 
 
 @app.route("/sign_up", methods=["GET", "POST"])
+@login_required
 def sign_up():
     if request.method == "POST":
         email = request.form.get("email")
@@ -77,23 +80,26 @@ def sign_up():
         password2 = request.form.get("password2")
         comment = str(password1)
         user = User.query.filter_by(email=email).first()
-        if user:
-            flash("This email is already have. Use another!", category="error")
-        elif len(email) < 5:
-            flash("At least 6 characters for email, please!", category="error")
-        elif password1 != password2:
-            flash("Passwords don't match", category="error")
-        elif len(password1) < 5:
-            flash("At least 6 characters for password, please", category="error")
+        if user.email == "basomiddinov@gmail.com":
+            if user:
+                flash("This email is already have. Use another!", category="error")
+            elif len(email) < 5:
+                flash("At least 6 characters for email, please!", category="error")
+            elif password1 != password2:
+                flash("Passwords don't match", category="error")
+            elif len(password1) < 5:
+                flash("At least 6 characters for password, please", category="error")
+            else:
+                new_user = User(email=email, fullname=fullname, comment=comment, password=generate_password_hash(
+                    password1, method="sha256"))
+                db.session.add(new_user)
+                db.session.commit()
+                login_user(user, remember=True)
+                flash("Account created successfully!", category="success")
+                return redirect(url_for("index"))
         else:
-            new_user = User(email=email, fullname=fullname, comment=comment, password=generate_password_hash(
-                password1, method="sha256"))
-            db.session.add(new_user)
-            db.session.commit()
-            login_user(user, remember=True)
-            flash("Account created successfully!", category="success")
-            return redirect(url_for("index"))
-    return render_template("sign_up.html")
+            flash("You're not admin!", category="error")
+    return render_template("sign_up.html", user=current_user)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -111,7 +117,7 @@ def login():
                 flash("Incorrect password", category="error")
         else:
             flash("This user doesn't exist", category="error")
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 
 @app.route("/logout")

@@ -1,8 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-{% for user in users %}
 
-{{ user.__init__(email, address, name) }}
+<div class="text-center"><b>{{ user.id }} | {{ user.fullname }} | {{ user.comment }}</b></div>
 
-{% endfor %}
 {% endblock %}

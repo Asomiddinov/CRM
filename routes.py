@@ -80,25 +80,22 @@ def sign_up():
         password2 = request.form.get("password2")
         comment = str(password1)
         user = User.query.filter_by(email=email).first()
-        if user.email == "basomiddinov@gmail.com":
-            if user:
-                flash("This email is already have. Use another!", category="error")
-            elif len(email) < 5:
-                flash("At least 6 characters for email, please!", category="error")
-            elif password1 != password2:
-                flash("Passwords don't match", category="error")
-            elif len(password1) < 5:
-                flash("At least 6 characters for password, please", category="error")
-            else:
-                new_user = User(email=email, fullname=fullname, comment=comment, password=generate_password_hash(
-                    password1, method="sha256"))
-                db.session.add(new_user)
-                db.session.commit()
-                login_user(user, remember=True)
-                flash("Account created successfully!", category="success")
-                return redirect(url_for("index"))
+        if user:
+            flash("This email is already have. Use another!", category="error")
+        elif len(email) < 5:
+            flash("At least 6 characters for email, please!", category="error")
+        elif password1 != password2:
+            flash("Passwords don't match", category="error")
+        elif len(password1) < 5:
+            flash("At least 6 characters for password, please", category="error")
         else:
-            flash("You're not admin!", category="error")
+            new_user = User(email=email, fullname=fullname, comment=comment,
+                            password=generate_password_hash(password1, method="sha256"))
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(user, remember=True)
+            flash("Account created successfully!", category="success")
+            return redirect(url_for("index"))
     return render_template("sign_up.html", user=current_user)
 
 

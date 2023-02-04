@@ -1,59 +1,61 @@
 {% extends 'layout.html' %}
 {% block content %}
 <br>
-<!-- Start of flash -->
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-<ul class=flashes>
-    {% for category, message in messages %}
-    <li class="{{ category }}">{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
-<!-- end of flash -->
+
 <style>
     h2 {
-        text-align: center;
+        text-overflow: ellipsis;
+    }
+
+    td {
+        border: 1px solid rgb(3, 67, 69);
+    }
+
+    td {
+        font-size: small;
+        font-weight: bold;
+        overflow: auto;
+        height: max-content;
     }
 </style>
 {% if client %}
 {{ form.csrf_token() }}
-<table class="container table table-info">
-    <thead class="thead-dark">
-        <tr class="table-dark">
-            <th scope="col">#</th>
-            <th scope="col">Client</th>
-            <th scope="col">Address</th>
-            <th scope="col">Miqdor</th>
-            <th scope="col">Mark</th>
-            <th scope="col">Umumiy narx</th>
-            <th scope="col">Pul birligi</th>
-            <th scope="col">To'landi</th>
-            <th scope="col">Qoldiq</th>
-            <th scope="col">Haydovchi</th>
-            <th scope="col">Date</th>
-            <th scope="col">Ruxsat</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>{{ client }}</td>
-            <td>{{ address }}</td>
-            <td>{{ quantity }}</td>
-            <td>{{ mark }}</td>
-            <td>{{ price }}</td>
-            <td>{{ currency }}</td>
-            <td>{{ paid }}</td>
-            <td>{{ price - paid }}</td>
-            <td>{{ driver }}</td>
-            <td>{{ date }}</td>
-            <td>{{ approve }}</td>
-        </tr>
-    </tbody>
-</table>
-
+<div class="d-flex align-content-start flex-wrap">
+    <table class="table table-info">
+        <thead class="thead-dark">
+            <tr class="table-dark">
+                <th scope="col">#</th>
+                <th scope="col">Client</th>
+                <th scope="col">Address</th>
+                <th scope="col">Miqdor</th>
+                <th scope="col">Mark</th>
+                <th scope="col">Umumiy narx</th>
+                <th scope="col">Pul birligi</th>
+                <th scope="col">To'landi</th>
+                <th scope="col">Qoldiq</th>
+                <th scope="col">Haydovchi</th>
+                <th scope="col">Date</th>
+                <th scope="col">Ruxsat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>{{ client }}</td>
+                <td>{{ address }}</td>
+                <td>{{ quantity }}</td>
+                <td>{{ mark }}</td>
+                <td>{{ price }}</td>
+                <td>{{ currency }}</td>
+                <td>{{ paid }}</td>
+                <td>{{ price - paid }}</td>
+                <td>{{ driver }}</td>
+                <td>{{ date }}</td>
+                <td>{{ approve }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 {% else %}
 <div class="">
     <form class="container-fluid" method="post">

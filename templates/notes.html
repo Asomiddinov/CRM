@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+<br>
+<div class="col-10 container-md text-center">
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-success">
+            {% for note in user.notes %}
+            <b>{{ user.email }}</b> | {{ note.data }}
+            {% endfor %}
+        </li>
+    </ul>
+</div>
+<br>
+<form method="post">
+    <div class="col-10 container-md text-center">
+        <label for="note" class="form-label"><b>NOTE:</b></label>
+        <textarea class="form-control" name="note" id="note" rows="3"></textarea><br>
+        <button type="submit" class="btn btn-success">Ok</button>
+    </div>
+</form>
+
+{% endblock %}

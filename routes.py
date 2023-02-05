@@ -1,6 +1,6 @@
 from __init__ import create_app, db
 from flask import render_template, request, flash, redirect, url_for
-from forms import QRCodeData, Mine, User
+from forms import QRCodeData, Mine, User, Note
 import secrets
 import qrcode
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -52,13 +52,17 @@ def mine():
     driver = form.driver.data
     date = form.date.data
     approve = form.approve.data
-    return render_template("act.html", form=form, client=client, address=address, quantity=quantity, mark=mark, price=price, currency=currency, paid=paid, driver=driver, date=date, approve=approve,
+    return render_template("mine.html", form=form, client=client, address=address, quantity=quantity, mark=mark, price=price, currency=currency, paid=paid, driver=driver, date=date, approve=approve,
                            user=current_user)
 
 
 @app.route("/acted", methods=["GET", "POST"])
 def acted():
     form = Mine()
+    if request.method == "POST":
+        db.session.add(form)
+        db.session.commit()
+        return render_template("acted.html")
     return render_template("acted.html", form=form, client=form.client.data, address=form.address.data, qantity=form.quantity.data, mark=form.mark.data,
                            price=form.price.data, currency=form.currency.data, paid=form.paid.data, driver=form.driver.data, date=form.date.data,
                            approve=form.approve.data,
@@ -122,3 +126,17 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("login"))
+
+
+@app.route("/notes", methods=["GET", "POST"])
+def notes():
+    if request.method == "POST":
+        note = request.form.get("note")
+        if len(note) < 1:
+            flash("At least 1 characters", category="error")
+        else:
+            new_note = Note(data=note, user_id=current_user.id)
+            db.session.add(new_note)
+            db.session.commit()
+            flash("Note added!", category="success")
+    return render_template("notes.html", user=current_user)

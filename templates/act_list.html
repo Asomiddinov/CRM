@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% block content %} <br>
+
+<style>
+    h2 {
+        text-overflow: ellipsis;
+    }
+
+    td {
+        border: 1px solid rgb(3, 67, 69);
+    }
+
+    td {
+        font-size: small;
+        font-weight: bold;
+    }
+</style>
+<div class="d-flex align-content-start flex-wrap">
+    <table class="table table-info">
+        <thead class="thead-dark">
+            <tr class="table-dark">
+                <th scope="col">#</th>
+                <th scope="col">Client</th>
+                <th scope="col">Address</th>
+                <th scope="col">Miqdor</th>
+                <th scope="col">Mark</th>
+                <th scope="col">Umumiy narx</th>
+                <th scope="col">To'landi</th>
+                <th scope="col">Pul birligi</th>
+                <th scope="col">Qoldiq</th>
+                <th scope="col">Haydovchi</th>
+                <th scope="col">Date</th>
+                <th scope="col">Ruxsat</th>
+            </tr>
+        </thead>
+        {% for i in reg %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ i.id }}</th>
+                <td>{{ i.client }}</td>
+                <td>{{ i.address }}</td>
+                <td>{{ i.quantity }}</td>
+                <td>{{ i.mark }}</td>
+                <td>{{ i.price }}</td>
+                <td>{{ i.paid }}</td>
+                <td>{{ i.currency }}</td>
+                <td>{{ i.price - i.paid }}</td>
+                <td>{{ i.driver }}</td>
+                <td>{{ i.date }}</td>
+                <td>{{ i.approve }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

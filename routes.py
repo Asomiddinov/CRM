@@ -1,6 +1,6 @@
 from __init__ import create_app, db
 from flask import render_template, request, flash, redirect, url_for
-from forms import QRCodeData, Mine, User, Note
+from forms import QRCodeData, Mine, User, Note, Reg
 import secrets
 import qrcode
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -12,11 +12,6 @@ app = create_app()
 @app.route("/index")
 def index():
     return render_template("index.html", title="Home Page", user=current_user)
-
-
-@app.route("/info")
-def info():
-    return render_template("info.html", user=current_user)
 
 
 @app.route("/generator", methods=["GET", "POST"])
@@ -56,17 +51,40 @@ def mine():
                            user=current_user)
 
 
-@app.route("/acted", methods=["GET", "POST"])
+@app.route("/action", methods=["GET", "POST"])
 def acted():
     form = Mine()
+    reg = Reg(client=request.form.get("client"), address=request.form.get("address"), quantity=request.form.get("quantity"),
+              paid=request.form.get("paid"), driver=request.form.get("driver"), date=request.form.get("date"), approve=request.form.get("approve"),
+              mark=request.form.get("mark"), price=request.form.get('price'), currency=request.form.get("currency"))
+    # reg = Reg.query.all()
     if request.method == "POST":
-        db.session.add(form)
-        db.session.commit()
-        return render_template("acted.html")
-    return render_template("acted.html", form=form, client=form.client.data, address=form.address.data, qantity=form.quantity.data, mark=form.mark.data,
-                           price=form.price.data, currency=form.currency.data, paid=form.paid.data, driver=form.driver.data, date=form.date.data,
-                           approve=form.approve.data,
-                           user=current_user)
+        if reg:
+            db.session.add(reg)
+            db.session.commit()
+            flash("Registered to database!", "success")
+            return redirect(url_for("info"))
+            # return render_template("action.html", form=form, user=current_user,
+            #                        client=reg.client,
+            #                        address=reg.address,
+            #                        quantity=reg.quantity,
+            #                        paid=reg.paid,
+            #                        driver=reg.driver,
+            #                        date=reg.date,
+            #                        approve=reg.approve,
+            #                        mark=reg.mark,
+            #                        price=reg.price,
+            #                        currency=reg.currency)
+    else:
+        return render_template("action.html", user=current_user, form=form)
+
+
+@app.route("/info", methods=["GET", "POST"])
+def info():
+    form = Mine()
+    if form.validate_on_submit:
+        reg = Reg.query.filter_by(id=Reg.id).all()
+        return render_template("act_list.html", form=form, reg=reg, user=current_user)
 
 
 @app.route("/users")

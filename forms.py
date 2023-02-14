@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, Length
 from __init__ import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from datetime import datetime
 
 
 class QRCodeData(FlaskForm):
@@ -48,3 +49,29 @@ class User(db.Model, UserMixin):
     fullname = db.Column(db.String(250))
     comment = db.Column(db.String(250))
     notes = db.relationship("Note")
+
+
+class Reg(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    client = db.Column(db.String(1000))
+    address = db.Column(db.String(1000))
+    quantity = db.Column(db.Integer)
+    mark = db.Column(db.String(1000))
+    price = db.Column(db.Integer)
+    paid = db.Column(db.Integer)
+    currency = db.Column(db.String())
+    driver = db.Column(db.String(1000))
+    date = db.Column(db.String())
+    approve = db.Column(db.String())
+
+    def __init__(self, client, address, quantity, mark, price, paid, currency, driver, date, approve):
+        self.client = client
+        self.address = address
+        self.quantity = quantity
+        self.mark = mark
+        self.price = price
+        self.paid = paid
+        self.currency = currency
+        self.driver = driver
+        self.date = date
+        self.approve = approve

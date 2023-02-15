@@ -33,25 +33,8 @@ def generator():
         return render_template("generator.html", title="🔢", form=form, user=current_user)
 
 
-@app.route("/mine", methods=["GET", "POST"])
-@login_required
-def mine():
-    form = Mine()
-    client = form.client.data
-    address = form.address.data
-    quantity = form.quantity.data
-    mark = form.mark.data
-    price = form.price.data
-    currency = form.currency.data
-    paid = form.paid.data
-    driver = form.driver.data
-    date = form.date.data
-    approve = form.approve.data
-    return render_template("mine.html", form=form, client=client, address=address, quantity=quantity, mark=mark, price=price, currency=currency, paid=paid, driver=driver, date=date, approve=approve,
-                           user=current_user)
-
-
 @app.route("/action", methods=["GET", "POST"])
+@login_required
 def acted():
     form = Mine()
     reg = Reg(client=request.form.get("client"), address=request.form.get("address"), quantity=request.form.get("quantity"),
@@ -115,9 +98,9 @@ def sign_up():
                             password=generate_password_hash(password1, method="sha256"))
             db.session.add(new_user)
             db.session.commit()
-            login_user(user, remember=True)
+            login_user(new_user, remember=True)
             flash("Account created successfully!", category="success")
-            return redirect(url_for("index"))
+            return redirect(url_for("login"))
     return render_template("sign_up.html", user=current_user)
 
 

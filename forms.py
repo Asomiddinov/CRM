@@ -10,7 +10,7 @@ from datetime import datetime
 
 class QRCodeData(FlaskForm):
     dat = StringField("Data", validators=[
-        DataRequired(), Length(min=3, max=500)])
+                      DataRequired(), Length(min=3, max=500)])
     submit = SubmitField("Generate QRCode")
 
 

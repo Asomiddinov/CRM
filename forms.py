@@ -30,7 +30,7 @@ class Mine(FlaskForm):
                          DataRequired(), Length(min=3, max=500)])
     date = DateField("Date", validators=[DataRequired()])
     approve = SelectField("Agreement", choices=[
-                          "O'tkazib yuboring!", "O'tkazib yubormang!"])
+                          "✅", "❌"])
     submit = SubmitField("Confirm")
 
 

@@ -67,11 +67,18 @@ def info():
     form = Mine()
     if form.validate_on_submit:
         reg = Reg.query.filter_by(id=Reg.id).all()
-        return render_template("act_list.html", form=form, reg=reg, user=current_user)
+        return render_template("info.html", form=form, reg=reg, user=current_user)
+
+
+@app.route("/info/<int:id>")
+def info_id(id):
+    reg = Reg.query.get_or_404(id)
+    return render_template("info_id.html", user=current_user, reg=reg)
 
 
 @app.route("/users")
 def users():
+    # user = User.query.filter_by(email=email).first()
     return render_template("users.html", user=current_user)
 
 

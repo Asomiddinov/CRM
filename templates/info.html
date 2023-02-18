@@ -10,13 +10,17 @@
         border: 1px solid rgb(3, 67, 69);
     }
 
+    tr {
+        border: 1px solid rgb(3, 67, 69);
+    }
+
     td {
         font-size: small;
         font-weight: bold;
     }
 </style>
-<div class="d-flex align-content-start flex-wrap">
-    <table class="table table-info">
+<div class="container-fluid" class="">
+    <table class="table table-info text-center">
         <thead class="thead-dark">
             <tr class="table-dark">
                 <th scope="col">#</th>
@@ -36,8 +40,8 @@
         {% for i in reg %}
         <tbody>
             <tr>
-                <th scope="row">{{ i.id }}</th>
-                <td>{{ i.client }}</td>
+                <th scope="row"><a href="{{ url_for('info_id', id=i.id) }}">{{ i.id }}</a></th>
+                <td><a href="{{ url_for('info_id', id=i.id) }}">{{ i.client }}</a></td>
                 <td>{{ i.address }}</td>
                 <td>{{ i.quantity }}</td>
                 <td>{{ i.mark }}</td>

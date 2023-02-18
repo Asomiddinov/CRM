@@ -26,7 +26,7 @@
 
 <body>
     {% if user.is_authenticated %}
-    <nav class="navbar bg-success" class="container-fluid justify-content-center">
+    <nav class="navbar bg-success fixed-bottom" class="container-fluid justify-content-center">
         <a href="/index">
             <button class="btn btn-sm btn-success" type="button"><b>Home</b></button>
         </a>
@@ -35,6 +35,9 @@
         </a>
         <a href="/action">
             <button class="btn btn-sm btn-success" type="button"><b>Action</b></button>
+        </a>
+        <a href="/info">
+            <button class="btn btn-sm btn-success" type="button"><b>Info</b></button>
         </a>
         <a href="/sign_up">
             <button class="btn btn-sm btn-success" type="button"><b>Sign Up</b></button>
@@ -46,11 +49,11 @@
     <p><b>{{ user.id }} | {{ user.fullname }} | {{ user.email }}</b></p>
     <style>
         p {
-            text-align: center;
+            text-align: end;
         }
     </style>
     {% else %}
-    <nav class="navbar bg-success" class="container-fluid justify-content-center">
+    <nav class="navbar bg-success fixed-bottom" class="container-fluid justify-content-center">
         <a href="/index">
             <button class="btn btn-sm btn-success" type="button"><b>Home</b></button>
         </a>
@@ -66,6 +69,7 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
         </script>
 </body>
+
 <!-- Start of flash -->
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}

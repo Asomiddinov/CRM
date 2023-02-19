@@ -4,7 +4,15 @@
 <div class="text-center">
     <b>⤵ {{ reg.id }} | {{ reg.client }} ⤵</b>
     <br><br>
-    <h1>{{ reg.address }}</h1>
+    <h1>Address: <b>{{ reg.address }}</b><br>
+        Date of action: <b>{{ reg.date }}</b><br>
+        Quantity: <b>{{ reg.quantity }}</b>
+    </h1><br>
+    <span class="border border-warning-subtle border-3">
+        <a style="color:aqua">Should be paid: <b>{{ reg.price }} {{ reg.currency }}</b></a> |
+        <a style="color: yellow;">Actually paid: <b>{{ reg.paid }} {{ reg.currency }}</b></a> |
+        <a style="color: red;">Debt: <b>{{ reg.paid - reg.price}} {{ reg.currency }}</b></a><br>
+    </span>
 </div>
 <br>
 {% endblock %}

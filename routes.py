@@ -47,19 +47,8 @@ def acted():
             db.session.commit()
             flash("Registered to database!", "success")
             return redirect(url_for("info"))
-            # return render_template("action.html", form=form, user=current_user,
-            #                        client=reg.client,
-            #                        address=reg.address,
-            #                        quantity=reg.quantity,
-            #                        paid=reg.paid,
-            #                        driver=reg.driver,
-            #                        date=reg.date,
-            #                        approve=reg.approve,
-            #                        mark=reg.mark,
-            #                        price=reg.price,
-            #                        currency=reg.currency)
     else:
-        return render_template("action.html", user=current_user, form=form)
+        return render_template("action.html", user=current_user, form=form, user_fullname=reg.user_fullname)
 
 
 @app.route("/info", methods=["GET", "POST"])

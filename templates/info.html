@@ -34,7 +34,7 @@
                 <th scope="col" style="color: red;">Debt</th>
                 <th scope="col">Driver</th>
                 <th scope="col">Date</th>
-                <th scope="col">Approval</th>
+                <th scope="col">User</th>
             </tr>
         </thead>
         {% for i in reg %}
@@ -51,7 +51,7 @@
                 <td style="color: red;">{{ i.paid - i.price }}</td>
                 <td>{{ i.driver }}</td>
                 <td>{{ i.date }}</td>
-                <td>{{ i.approve }}</td>
+                <td>{{ current_user.fullname }}</td>
             </tr>
         </tbody>
         {% endfor %}

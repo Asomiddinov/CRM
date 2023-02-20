@@ -13,10 +13,10 @@ app.config["SECRET_KEY"] = 'bluiylvkjg udyitfiuyfghjg'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///clients.sqlite3"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 db.init_app(app)
+migrate = Migrate(app, db)
 
 
 def create_app():
-    migrate = Migrate(app, db)
     create_database(app)
 
     login_manager = LoginManager(app)

@@ -1,6 +1,6 @@
+<title>ℹ</title>
 {% extends 'layout.html' %}
 {% block content %} <br>
-
 <style>
     h2 {
         text-overflow: ellipsis;
@@ -19,7 +19,7 @@
         font-weight: bold;
     }
 </style>
-<div class="container-fluid" class="">
+<div class="container-fluid">
     <table class="table table-dark text-center">
         <thead class="thead-dark">
             <tr class="table-dark">
@@ -28,9 +28,9 @@
                 <th scope="col">Address</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Mark</th>
+                <th scope="col">Currency</th>
                 <th scope="col" style="color: aqua;">Price</th>
                 <th scope="col" style="color: yellow;">Paid</th>
-                <th scope="col">Currency</th>
                 <th scope="col" style="color: red;">Debt</th>
                 <th scope="col">Driver</th>
                 <th scope="col">Date</th>
@@ -45,16 +45,17 @@
                 <td>{{ i.address }}</td>
                 <td>{{ i.quantity }}</td>
                 <td>{{ i.mark }}</td>
+                <td>{{ i.currency }}</td>
                 <td style="color: aqua;">{{ i.price }}</td>
                 <td style="color: yellow;">{{ i.paid }}</td>
-                <td>{{ i.currency }}</td>
                 <td style="color: red;">{{ i.paid - i.price }}</td>
                 <td>{{ i.driver }}</td>
                 <td>{{ i.date }}</td>
-                <td>{{ current_user.fullname }}</td>
+                <td>{{ i.user_fullname }}</td>
             </tr>
         </tbody>
         {% endfor %}
     </table>
 </div>
+<b style="text-align: center;">{{ user_fullname }}</b>
 {% endblock %}

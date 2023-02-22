@@ -4,15 +4,57 @@
 <div class="text-center">
     <b>⤵ {{ reg.id }} | {{ reg.client }} ⤵</b>
     <br><br>
-    <h1>Address: <b>{{ reg.address }}</b><br>
-        Date of action: <b>{{ reg.date }}</b><br>
-        Quantity: <b>{{ reg.quantity }}</b>
-    </h1><br>
-    <span class="border border-warning-subtle border-3">
-        <a style="color:aqua">Should be paid: <b>{{ reg.price }} {{ reg.currency }}</b></a> |
-        <a style="color: yellow;">Actually paid: <b>{{ reg.paid }} {{ reg.currency }}</b></a> |
-        <a style="color: red;">Debt: <b>{{ reg.paid - reg.price}} {{ reg.currency }}</b></a><br>
-    </span>
+    <table class="table table-dark text-center container-fluid">
+        <thead class="thead-dark">
+            <tr class="table-dark">
+                <th scope="col">#</th>
+                <th scope="col">Client</th>
+                <th scope="col">Address</th>
+                <th scope="col">Date</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Mark</th>
+                <th scope="col">Currency</th>
+                <th scope="col" style="color: aqua;">Price</th>
+                <th scope="col" style="color: yellow;">Paid</th>
+                <th scope="col" style="color: red;">Debt</th>
+                <!-- <th scope="col">Driver</th> -->
+                <!-- <th scope="col">User</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">{{ reg.id }}</th>
+                <td>{{ reg.client }}</td>
+                <td>{{ reg.address }}</td>
+                <td>{{ reg.date }}</td>
+                <td>{{ reg.quantity }}</td>
+                <td>{{ reg.mark }}</td>
+                <td>{{ reg.currency }}</td>
+                <td style="color: aqua;">{{ reg.price }}</td>
+                <td style="color: yellow;">{{ reg.paid }}</td>
+                <td style="color: red;">{{ reg.paid - reg.price }}</td>
+                <!-- <td>{{ reg.driver }}</td> -->
+                <!-- <td>{{ reg.user_fullname }}</td> -->
+            </tr>
+        </tbody>
+    </table>
 </div>
-<br>
+<style>
+    h2 {
+        text-overflow: ellipsis;
+    }
+
+    td {
+        border: 1px solid rgb(5, 70, 70);
+    }
+
+    tr {
+        border: 1px solid rgb(5, 70, 70);
+    }
+
+    td {
+        font-size: large;
+        font-weight: bold;
+    }
+</style>
 {% endblock %}

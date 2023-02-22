@@ -68,7 +68,7 @@ class Reg(db.Model):
     approve = db.Column(db.String())
     user_fullname = db.Column(db.String(), db.ForeignKey("user.fullname"))
 
-    def __init__(self, client, address, quantity, mark, price, paid, currency, driver, date, approve):
+    def __init__(self, client, address, quantity, mark, price, paid, currency, driver, date, approve, user_fullname):
         self.client = client
         self.address = address
         self.quantity = quantity
@@ -79,3 +79,4 @@ class Reg(db.Model):
         self.driver = driver
         self.date = date
         self.approve = approve
+        self.user_fullname = user_fullname

@@ -11,7 +11,7 @@ app = create_app()
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html", title="Home Page", user=current_user)
+    return render_template("index.html", title="uzbaba systems 👨🏻‍💻", user=current_user)
 
 
 @app.route("/generator", methods=["GET", "POST"])
@@ -39,7 +39,7 @@ def acted():
     form = Mine()
     reg = Reg(client=request.form.get("client"), address=request.form.get("address"), quantity=request.form.get("quantity"),
               paid=request.form.get("paid"), driver=request.form.get("driver"), date=request.form.get("date"), approve=request.form.get("approve"),
-              mark=request.form.get("mark"), price=request.form.get('price'), currency=request.form.get("currency"))
+              mark=request.form.get("mark"), price=request.form.get('price'), currency=request.form.get("currency"), user_fullname=request.form.get("user.fullname"))
     # reg = Reg.query.all()
     if request.method == "POST":
         if reg:
@@ -48,10 +48,10 @@ def acted():
             flash("Registered to database!", "success")
             return redirect(url_for("info"))
     else:
-        return render_template("action.html", user=current_user, form=form, user_fullname=reg.user_fullname)
+        return render_template("action.html", user=current_user, form=form)
 
 
-@app.route("/info", methods=["GET", "POST"])
+@ app.route("/info", methods=["GET", "POST"])
 def info():
     form = Mine()
     if form.validate_on_submit:
@@ -59,20 +59,20 @@ def info():
         return render_template("info.html", form=form, reg=reg, user=current_user)
 
 
-@app.route("/info/<int:id>")
+@ app.route("/info/<int:id>")
 def info_id(id):
     reg = Reg.query.get_or_404(id)
     return render_template("info_id.html", user=current_user, reg=reg)
 
 
-@app.route("/users")
+@ app.route("/users")
 def users():
     # user = User.query.filter_by(email=email).first()
     return render_template("users.html", user=current_user)
 
 
-@app.route("/sign_up", methods=["GET", "POST"])
-@login_required
+@ app.route("/sign_up", methods=["GET", "POST"])
+@ login_required
 def sign_up():
     if request.method == "POST":
         email = request.form.get("email")
@@ -100,7 +100,7 @@ def sign_up():
     return render_template("sign_up.html", user=current_user)
 
 
-@app.route("/login", methods=["GET", "POST"])
+@ app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form.get("email")
@@ -118,14 +118,14 @@ def login():
     return render_template("login.html", user=current_user)
 
 
-@app.route("/logout")
-@login_required
+@ app.route("/logout")
+@ login_required
 def logout():
     logout_user()
     return redirect(url_for("login"))
 
 
-@app.route("/notes", methods=["GET", "POST"])
+@ app.route("/notes", methods=["GET", "POST"])
 def notes():
     if request.method == "POST":
         note = request.form.get("note")

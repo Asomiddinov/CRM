@@ -42,3 +42,19 @@ n = 0
 for i in range(5):
     n = n+i
 print(n)
+
+# in info/<int:id>:
+# regl = {id: reg.client_id, "client": reg.client, "address": reg.address, "approve": reg.approve, "currency": reg.currency, "date": reg.date,
+#         "driver": reg.driver, "id": reg.id, "mark": reg.mark, "paid": reg.paid, "price": reg.price, "quantity": reg.quantity, "user_fullname": reg.user_fullname}
+# id = regl.get("client_id")
+# client = regl.get("client")
+# address = regl.get("address")
+# approve = regl.get("approve")
+# currency = regl.get("currency")
+# date = regl.get("date")
+# driver = regl.get("driver")
+# mark = regl.get("mark")
+# paid = regl.get("paid")
+# price = regl.get("price")
+# quantity = regl.get("quantity")
+# user_fullname = regl.get("user_fullname")

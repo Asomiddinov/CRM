@@ -2,8 +2,6 @@
 {% block content %}
 <br>
 <div class="text-center">
-    <b>⤵ {{ reg.id }} | {{ reg.client }} ⤵</b>
-    <br><br>
     <table class="table table-dark text-center container-fluid">
         <thead class="thead-dark">
             <tr class="table-dark">
@@ -21,22 +19,24 @@
                 <!-- <th scope="col">User</th> -->
             </tr>
         </thead>
+        {% for exact in exacts %}
         <tbody>
             <tr>
-                <th scope="row">{{ reg.id }}</th>
-                <td>{{ reg.client }}</td>
-                <td>{{ reg.address }}</td>
-                <td>{{ reg.date }}</td>
-                <td>{{ reg.quantity }}</td>
-                <td>{{ reg.mark }}</td>
-                <td>{{ reg.currency }}</td>
-                <td style="color: aqua;">{{ reg.price }}</td>
-                <td style="color: yellow;">{{ reg.paid }}</td>
-                <td style="color: red;">{{ reg.paid - reg.price }}</td>
-                <!-- <td>{{ reg.driver }}</td> -->
-                <!-- <td>{{ reg.user_fullname }}</td> -->
+                <th scope="row">{{ exact.client_id }}</th>
+                <td>{{ exact.client }}</td>
+                <td>{{ exact.address }}</td>
+                <td>{{ exact.date }}</td>
+                <td>{{ exact.quantity }}</td>
+                <td>{{ exact.mark }}</td>
+                <td>{{ exact.currency }}</td>
+                <td style="color: aqua;">{{ exact.price }}</td>
+                <td style="color: yellow;">{{ exact.paid }}</td>
+                <td style="color: red;">{{ exact.paid - exact.price }}</td>
+                <!-- <td>{{ exacts.driver }}</td-->
+                <!-- <td>{{ exacts.user_fullname }}</td> -->
             </tr>
         </tbody>
+        {% endfor %}
     </table>
 </div>
 <style>

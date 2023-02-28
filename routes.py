@@ -5,6 +5,7 @@ import secrets
 import qrcode
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
+from sqlalchemy import select
 app = create_app()
 
 
@@ -39,7 +40,8 @@ def acted():
     form = Mine()
     reg = Reg(client=request.form.get("client"), address=request.form.get("address"), quantity=request.form.get("quantity"),
               paid=request.form.get("paid"), driver=request.form.get("driver"), date=request.form.get("date"), approve=request.form.get("approve"),
-              mark=request.form.get("mark"), price=request.form.get('price'), currency=request.form.get("currency"), user_fullname=request.form.get("user.fullname"))
+              mark=request.form.get("mark"), price=request.form.get('price'), currency=request.form.get("currency"),
+              user_fullname=request.form.get("user.fullname"), client_id=request.form.get("client_id"))
     # reg = Reg.query.all()
     if request.method == "POST":
         if reg:
@@ -51,7 +53,7 @@ def acted():
         return render_template("action.html", user=current_user, form=form)
 
 
-@ app.route("/info", methods=["GET", "POST"])
+@app.route("/info", methods=["GET", "POST"])
 def info():
     form = Mine()
     if form.validate_on_submit:
@@ -59,20 +61,29 @@ def info():
         return render_template("info.html", form=form, reg=reg, user=current_user)
 
 
-@ app.route("/info/<int:id>")
-def info_id(id):
-    reg = Reg.query.get_or_404(id)
-    return render_template("info_id.html", user=current_user, reg=reg)
+@app.route("/info/<client_id>")
+def info_id(client_id):
+    form = Mine()
+    # row = select(Reg.client_id).where(Reg.client_id == "client_id")
+    # exacts = db.session.query(Reg).filter_by(client=Reg.client).all()
+    # exacts = Reg.query.filter(Reg.query.)
+    # users = User.query.with_entities(User.username, User.email).all()
+    if client_id:
+        exacts = Reg.query.filter_by(client_id=client_id).all()
+        return render_template("info_id.html", user=current_user, exacts=exacts, form=form)
+    else:
+        flash("No that client_id!", "error")
+        return render_template("info.html", user=current_user, form=form)
 
 
-@ app.route("/users")
+@app.route("/users")
 def users():
-    # user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=User.email).all()
     return render_template("users.html", user=current_user)
 
 
-@ app.route("/sign_up", methods=["GET", "POST"])
-@ login_required
+@app.route("/sign_up", methods=["GET", "POST"])
+@login_required
 def sign_up():
     if request.method == "POST":
         email = request.form.get("email")
@@ -100,7 +111,7 @@ def sign_up():
     return render_template("sign_up.html", user=current_user)
 
 
-@ app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form.get("email")
@@ -118,14 +129,14 @@ def login():
     return render_template("login.html", user=current_user)
 
 
-@ app.route("/logout")
-@ login_required
+@app.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for("login"))
 
 
-@ app.route("/notes", methods=["GET", "POST"])
+@app.route("/notes", methods=["GET", "POST"])
 def notes():
     if request.method == "POST":
         note = request.form.get("note")

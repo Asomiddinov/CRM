@@ -10,6 +10,10 @@
                 {{ form.client(class="form-control", placeholder="Full name") }}
             </div>
             <div class="col">
+                <b>{{ form.client_id.label }}</b>
+                {{ form.client_id(class="form-control", placeholder="Choose Client's id") }}
+            </div>
+            <div class="col">
                 <b>{{ form.address.label }}</b>
                 {{ form.address(class="form-control", placeholder="Delivery Address") }}
             </div>
@@ -29,7 +33,7 @@
             </div>
             <div class="col">
                 <b>{{ form.paid.label }}</b>
-                <b>{{ form.paid(class="form-control") }}</b>
+                <b>{{ form.paid(class="form-control", placeholder="UZS/USD/EU/RUB") }}</b>
             </div>
             <div class="col">
                 <b>{{ form.currency.label }}</b>

@@ -15,6 +15,7 @@ class QRCodeData(FlaskForm):
 
 
 class Mine(FlaskForm):
+    client_id = IntegerField("client_id", validators=[DataRequired()])
     client = StringField("Client", validators=[
                          DataRequired(), Length(min=3, max=500)])
     address = StringField("Address", validators=[
@@ -26,8 +27,8 @@ class Mine(FlaskForm):
     price = IntegerField("Price", validators=[DataRequired()])
     currency = SelectField("Currency", choices=["UZS", "USD", "EUR", "RUB"])
     paid = IntegerField("Paid", validators=[DataRequired()])
-    driver = StringField("Driver", validators=[
-                         DataRequired(), Length(min=3, max=500)])
+    driver = SelectField("Driver", choices=[
+                         "861", "862", "863", "864", "145", "146"])
     date = DateField("Date", validators=[DataRequired()])
     approve = SelectField("Agreement", choices=[
                           "✅", "❌"])
@@ -56,6 +57,7 @@ class User(db.Model, UserMixin):
 class Reg(db.Model):
     __tablename__ = "reg"
     id = db.Column(db.Integer, primary_key=True)
+    client_id = db.Column(db.Integer)
     client = db.Column(db.String(1000))
     address = db.Column(db.String(1000))
     quantity = db.Column(db.Integer)
@@ -68,7 +70,7 @@ class Reg(db.Model):
     approve = db.Column(db.String())
     user_fullname = db.Column(db.String(), db.ForeignKey("user.fullname"))
 
-    def __init__(self, client, address, quantity, mark, price, paid, currency, driver, date, approve, user_fullname):
+    def __init__(self, client, address, quantity, mark, price, paid, currency, driver, date, approve, user_fullname, client_id):
         self.client = client
         self.address = address
         self.quantity = quantity
@@ -80,3 +82,4 @@ class Reg(db.Model):
         self.date = date
         self.approve = approve
         self.user_fullname = user_fullname
+        self.client_id = client_id

@@ -25,6 +25,7 @@
             <tr class="table-dark">
                 <th scope="col">#</th>
                 <th scope="col">Client</th>
+                <th scope="col">client_id</th>
                 <th scope="col">Address</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Mark</th>
@@ -40,8 +41,9 @@
         {% for i in reg %}
         <tbody>
             <tr>
-                <th scope="row"><a href="{{ url_for('info_id', id=i.id) }}">{{ i.id }}</a></th>
-                <td><a href="{{ url_for('info_id', id=i.id) }}">{{ i.client }}</a></td>
+                <th scope="row">{{ i.id }}</th>
+                <td><a href="{{ url_for('info_id', client_id=i.client_id) }}">{{ i.client }}</a></td>
+                <th scope="row"><a href="{{ url_for('info_id', client_id=i.client_id) }}">{{ i.client_id }}</a></th>
                 <td>{{ i.address }}</td>
                 <td>{{ i.quantity }}</td>
                 <td>{{ i.mark }}</td>

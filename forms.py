@@ -1,4 +1,4 @@
-from wtforms import StringField, SubmitField, IntegerField, RadioField, SelectField
+from wtforms import StringField, SubmitField, IntegerField, RadioField, SelectField, FloatField
 from wtforms.fields import DateField
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length
@@ -20,18 +20,19 @@ class Mine(FlaskForm):
                          DataRequired(), Length(min=3, max=500)])
     address = StringField("Address", validators=[
                           DataRequired(), Length(min=3, max=500)])
-    quantity = StringField("Quantity", validators=[
-                           DataRequired(), Length(max=500)])
+    quantity = FloatField("Quantity", validators=[
+        DataRequired()])
     mark = StringField("Mark", validators=[
                        DataRequired(), Length(min=3, max=100)])
     price = IntegerField("Price", validators=[DataRequired()])
     currency = SelectField("Currency", choices=["UZS", "USD", "EUR", "RUB"])
     paid = IntegerField("Paid", validators=[DataRequired()])
     driver = SelectField("Driver", choices=[
-                         "861", "862", "863", "864", "145", "146"])
+                         "No", "861", "862", "863", "864", "145", "146"])
     date = DateField("Date", validators=[DataRequired()])
     approve = SelectField("Agreement", choices=[
                           "✅", "❌"])
+    user_fullname = StringField("User_fullname", validators=[DataRequired()])
     submit = SubmitField("Confirm")
 
 
@@ -51,7 +52,7 @@ class User(db.Model, UserMixin):
     fullname = db.Column(db.String(250))
     comment = db.Column(db.String(250))
     notes = db.relationship("Note")
-    reg = db.relationship("Reg")
+    reg = db.relationship("Reg", backref="user")
 
 
 class Reg(db.Model):
@@ -60,7 +61,7 @@ class Reg(db.Model):
     client_id = db.Column(db.Integer)
     client = db.Column(db.String(1000))
     address = db.Column(db.String(1000))
-    quantity = db.Column(db.Integer)
+    quantity = db.Column(db.Float)
     mark = db.Column(db.String(1000))
     price = db.Column(db.Integer)
     paid = db.Column(db.Integer)

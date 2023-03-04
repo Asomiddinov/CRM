@@ -41,7 +41,7 @@ def acted():
     reg = Reg(client=request.form.get("client"), address=request.form.get("address"), quantity=request.form.get("quantity"),
               paid=request.form.get("paid"), driver=request.form.get("driver"), date=request.form.get("date"), approve=request.form.get("approve"),
               mark=request.form.get("mark"), price=request.form.get('price'), currency=request.form.get("currency"),
-              user_fullname=request.form.get("user.fullname"), client_id=request.form.get("client_id"))
+              user_fullname=request.form.get("user_fullname"), client_id=request.form.get("client_id"))
     # reg = Reg.query.all()
     if request.method == "POST":
         if reg:
@@ -78,8 +78,8 @@ def info_id(client_id):
 
 @app.route("/users")
 def users():
-    user = User.query.filter_by(email=User.email).all()
-    return render_template("users.html", user=current_user)
+    users = User.query.filter_by(email=User.email).all()
+    return render_template("users.html", user=current_user, users=users)
 
 
 @app.route("/sign_up", methods=["GET", "POST"])

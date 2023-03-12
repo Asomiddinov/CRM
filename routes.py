@@ -61,16 +61,12 @@ def info():
         return render_template("info.html", form=form, reg=reg, user=current_user)
 
 
-@app.route("/info/<client_id>")
-def info_id(client_id):
+@app.route("/info/<client>/<client_id>")
+def info_id(client, client_id):
     form = Mine()
-    # row = select(Reg.client_id).where(Reg.client_id == "client_id")
-    # exacts = db.session.query(Reg).filter_by(client=Reg.client).all()
-    # exacts = Reg.query.filter(Reg.query.)
-    # users = User.query.with_entities(User.username, User.email).all()
-    if client_id:
-        exacts = Reg.query.filter_by(client_id=client_id).all()
-        return render_template("info_id.html", user=current_user, exacts=exacts, form=form)
+    if client:
+        e = Reg.query.filter_by(client=client, client_id=client_id).all()
+        return render_template("info_client.html", user=current_user, e=e, form=form)
     else:
         flash("No that client_id!", "error")
         return render_template("info.html", user=current_user, form=form)

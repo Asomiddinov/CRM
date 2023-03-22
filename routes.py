@@ -5,7 +5,9 @@ import secrets
 import qrcode
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
-from sqlalchemy import select
+from sqlalchemy import select, func
+import numpy as np
+import pandas as pd
 app = create_app()
 
 
@@ -58,7 +60,12 @@ def info():
     form = Mine()
     if form.validate_on_submit:
         reg = Reg.query.filter_by(id=Reg.id).all()
-        return render_template("info.html", form=form, reg=reg, user=current_user)
+        balance, balance_paid, balance_price = 0, 0, 0
+        for i in reg:
+            balance = balance + i.paid - i.price
+            balance_paid = balance_paid+i.paid
+            balance_price = balance_price+i.price
+        return render_template("info.html", form=form, reg=reg, user=current_user, balance=balance, balance_paid=balance_paid, balance_price=balance_price)
 
 
 @app.route("/info/<client>/<client_id>")
@@ -66,7 +73,12 @@ def info_id(client, client_id):
     form = Mine()
     if client:
         e = Reg.query.filter_by(client=client, client_id=client_id).all()
-        return render_template("info_client.html", user=current_user, e=e, form=form)
+        balance, balance_paid, balance_price = 0, 0, 0
+        for i in e:
+            balance = balance + i.paid - i.price
+            balance_paid = balance_paid+i.paid
+            balance_price = balance_price+i.price
+        return render_template("info_client.html", user=current_user, e=e, form=form, balance=balance, balance_paid=balance_paid, balance_price=balance_price)
     else:
         flash("No that client_id!", "error")
         return render_template("info.html", user=current_user, form=form)
@@ -144,3 +156,9 @@ def notes():
             db.session.commit()
             flash("Note added!", category="success")
     return render_template("notes.html", user=current_user)
+
+
+@app.route("/create_all")
+def create_all():
+    db.create_all()
+    return "All tables are created!!!"

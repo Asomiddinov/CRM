@@ -32,7 +32,7 @@
                 <th scope="col">Mark</th>
                 <th scope="col">Currency</th>
                 <th scope="col" style="color: aqua;">Price:<b> {{ balance_price }}</b></th>
-                <th scope="col" style="color: yellow;">Paid:<b> {{ balance_price }}</b></th>
+                <th scope="col" style="color: yellow;">Paid:<b> {{ balance_paid }}</b></th>
                 {% if balance >= 0 %}
                 <th scope="col" style="color: rgb(50, 190, 100);"><b>Balance: {{ balance }}</b></th>
                 {% else %}
@@ -46,10 +46,10 @@
         {% for i in reg %}
         <tbody>
             <tr>
-                <th scope="row">{{ i.id }}</th>
-                <td><a href="{{ url_for('info_id', client=i.client, client_id=i.client_id) }}">{{ i.client }}</a>
+                <th scope="row"><a href="{{ url_for('info_id', id=i.id) }}">{{ i.id }}</a></th>
+                <td><a href="{{ url_for('info_client', client=i.client, client_id=i.client_id) }}">{{ i.client }}</a>
                 </td>
-                <th scope="row"><a href="{{ url_for('info_id', client=i.client, client_id=i.client_id) }}">
+                <th scope="row"><a href="{{ url_for('info_client', client=i.client, client_id=i.client_id) }}">
                         {{ i.client_id }}</a>
                 </th>
                 <td>{{ i.address }}</td>

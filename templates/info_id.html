@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
 <br>
+<div class="text-center"><b>Order № {{ exact.id }}</b></div>
 <div class="text-center">
     <table class="table table-dark text-center container-fluid">
         <thead class="thead-dark">
@@ -19,7 +20,6 @@
                 <!-- <th scope="col">User</th> -->
             </tr>
         </thead>
-        {% for exact in exacts %}
         <tbody>
             <tr>
                 <th scope="row">{{ exact.client_id }}</th>
@@ -36,7 +36,6 @@
                 <!-- <td>{{ exact.user_fullname }}</td> -->
             </tr>
         </tbody>
-        {% endfor %}
     </table>
 </div>
 <style>
@@ -57,5 +56,4 @@
         font-weight: bold;
     }
 </style>
-{{ balance }}
 {% endblock %}

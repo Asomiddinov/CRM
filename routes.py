@@ -63,13 +63,13 @@ def info():
         balance, balance_paid, balance_price = 0, 0, 0
         for i in reg:
             balance = balance + i.paid - i.price
-            balance_paid = balance_paid+i.paid
-            balance_price = balance_price+i.price
+            balance_paid = balance_paid + i.paid
+            balance_price = balance_price + i.price
         return render_template("info.html", form=form, reg=reg, user=current_user, balance=balance, balance_paid=balance_paid, balance_price=balance_price)
 
 
 @app.route("/info/<client>/<client_id>")
-def info_id(client, client_id):
+def info_client(client, client_id):
     form = Mine()
     if client:
         e = Reg.query.filter_by(client=client, client_id=client_id).all()
@@ -82,6 +82,14 @@ def info_id(client, client_id):
     else:
         flash("No that client_id!", "error")
         return render_template("info.html", user=current_user, form=form)
+
+
+@app.route("/info/<int:id>", methods=["GET", "POST"])
+def info_id(id):
+    form = Mine()
+    if form.validate_on_submit:
+        exact = Reg.query.get_or_404(id)
+        return render_template("info_id.html", form=form, exact=exact, user=current_user)
 
 
 @app.route("/users")
